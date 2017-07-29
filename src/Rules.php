@@ -10,9 +10,41 @@ class Rules
      * @var array
      */
     protected static $rules = [
-        'int' => '[0-9]+',
-        'id' => '[0-9]+',
+        'integer' => '(?:[1-9][0-9]*|0)',
+        'float' => '(?:[1-9][0-9]*|0)\.[0-9]*',
+        'number' => '(?:[1-9][0-9]*|0)(?:\.[0-9]*)?',
+        'string' => '(?:.|[^.])+',
+        'boolean' => 'true|false',
+        'word' => '\w+',
+        'slug' => '[\s\d_\-]+'
     ];
+
+    protected static $aliases = [
+        'bool' => 'boolean',
+        'int' => 'integer',
+        'double' => 'float',
+    ];
+
+    /**
+     * Добавляет псевоним для правила
+     * @param string $name
+     * @param string $alias
+     * @return void
+     */
+    public static function alias($name, $alias)
+    {
+        static::$aliases[$alias] = $name;
+    }
+
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected static function name($name)
+    {
+        return isset(static::$aliases[$name]) ? static::$aliases[$name] : $name;
+    }
 
     /**
      * Установка правила
@@ -22,7 +54,7 @@ class Rules
      */
     public static function set($name, $rule)
     {
-        static::$rules[$name] = $rule;
+        static::$rules[static::name($name)] = $rule;
     }
 
     /**
@@ -31,7 +63,7 @@ class Rules
      */
     public static function remove($name)
     {
-        unset(static::$rules[$name]);
+        unset(static::$rules[static::name($name)]);
     }
 
     /**
@@ -41,7 +73,7 @@ class Rules
      */
     public static function has($name)
     {
-        return isset(static::$rules[$name]);
+        return isset(static::$rules[static::name($name)]);
     }
 
     /**
@@ -51,7 +83,7 @@ class Rules
      */
     public static function get($name)
     {
-        return static::has($name) ? static::$rules[$name] : null;
+        return static::has(static::name($name)) ? static::$rules[static::name($name)] : null;
     }
 
     /**
