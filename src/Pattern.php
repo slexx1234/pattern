@@ -47,7 +47,7 @@ class Pattern
                 $type = $param['type'];
 
                 if (isset($matches[$name])) {
-                    $result[$name] = Type::to($name, $type);
+                    $result[$name] = Type::to($matches[$name], $type);
                 } else {
                     if (isset($this->defaults[$name])) {
                         $result[$name] = $this->defaults[$name];
