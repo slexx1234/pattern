@@ -14,7 +14,7 @@ class Rules
         'float' => '(?:[1-9][0-9]*|0)\.[0-9]*',
         'number' => '(?:[1-9][0-9]*|0)(?:\.[0-9]*)?',
         'string' => '(?:.|[^.])+',
-        'boolean' => 'true|false',
+        'boolean' => 'true|false|0|1|on|off',
         'word' => '\w+',
         'slug' => '[\s\d_\-]+'
     ];
