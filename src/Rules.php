@@ -16,7 +16,7 @@ class Rules
         'string' => '(?:.|[^.])+',
         'boolean' => 'true|false|0|1|on|off',
         'word' => '\w+',
-        'slug' => '[\s\d_\-]+'
+        'slug' => '[\w\d_\-]+'
     ];
 
     protected static $aliases = [
