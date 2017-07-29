@@ -39,9 +39,7 @@ class Pattern
             $result = [];
             foreach($this->context->getParams() as $param) {
                 if (isset($matches[$param['name']])) {
-                    $value = $matches[$param['name']];
-                    settype($value, $param['type']);
-                    $result[$param['name']] = $value;
+                    $result[$param['name']] = Type::to($matches[$param['name']], $param['type']);
                 } else {
                     $result[$param['name']] = null;
                 }
