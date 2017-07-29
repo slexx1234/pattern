@@ -10,7 +10,7 @@ class Rules
      * @var array
      */
     protected static $rules = [
-        'integer' => '(?:[1-9][0-9]*|0)',
+        'integer' => '[1-9][0-9]*|0',
         'float' => '(?:[1-9][0-9]*|0)\.[0-9]*',
         'number' => '(?:[1-9][0-9]*|0)(?:\.[0-9]*)?',
         'string' => '(?:.|[^.])+',
