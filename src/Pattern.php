@@ -12,6 +12,11 @@ class Pattern
     protected $context;
 
     /**
+     * @var array
+     */
+    protected $defaults = [];
+
+    /**
      * @param string $pattern
      */
     public function __construct($pattern)
@@ -38,10 +43,19 @@ class Pattern
         if (preg_match($this->context->compile(), $string, $matches)) {
             $result = [];
             foreach($this->context->getParams() as $param) {
-                if (isset($matches[$param['name']])) {
-                    $result[$param['name']] = Type::to($matches[$param['name']], $param['type']);
+                $name = $param['name'];
+                $type = $param['type'];
+
+                if (isset($matches[$name])) {
+                    $result[$name] = Type::to($name, $type);
                 } else {
-                    $result[$param['name']] = null;
+                    if (isset($this->defaults[$name])) {
+                        $result[$name] = $this->defaults[$name];
+                    } else if ($type === 'bool' || $type === 'boolean') {
+                        $result[$name] = false;
+                    } else {
+                        $result[$name] = null;
+                    }
                 }
             }
             return $result;
@@ -56,5 +70,15 @@ class Pattern
     public function is($string)
     {
         return (bool) preg_match($this->context->compile(), $string);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $data
+     * @return void
+     */
+    public function default($name, $data)
+    {
+        $this->defaults[$name] = $data;
     }
 }
