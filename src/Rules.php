@@ -4,6 +4,8 @@ namespace Slexx\Pattern;
 
 class Rules
 {
+    const DEFAULT_RULE = '.+';
+
     /**
      * @var array
      */
