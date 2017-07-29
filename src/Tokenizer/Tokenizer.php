@@ -53,9 +53,9 @@ class Tokenizer
                     break;
 
                 default:
-                    preg_match('/(?=[\[\]<>:]|^)[^\[\]<>:]+(?=[\[\]<>:]|$)/', substr($pattern, $i), $matches);
-                    $result[] = new Token($i, $matches[0], self::T_TEXT);
-                    $i += strlen($matches[0]) - 1;
+                    preg_match('/^([^\[<\]]+)(?=[\[<\]]|$)/', substr($pattern, $i), $matches);
+                    $result[] = new Token($i, $matches[1], self::T_TEXT);
+                    $i += strlen($matches[1]) - 1;
                     break;
             }
         }
