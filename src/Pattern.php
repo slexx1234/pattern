@@ -46,16 +46,17 @@ class Pattern
                 $name = $param['name'];
                 $type = $param['type'];
 
-                if (isset($matches[$name])) {
+                if (isset($matches[$name]) && !empty(trim($matches[$name]))) {
                     $result[$name] = Type::to($matches[$name], $type);
+                    continue;
+                }
+
+                if (isset($this->defaults[$name])) {
+                    $result[$name] = $this->defaults[$name];
+                } else if ($type === 'bool' || $type === 'boolean') {
+                    $result[$name] = false;
                 } else {
-                    if (isset($this->defaults[$name])) {
-                        $result[$name] = $this->defaults[$name];
-                    } else if ($type === 'bool' || $type === 'boolean') {
-                        $result[$name] = false;
-                    } else {
-                        $result[$name] = null;
-                    }
+                    $result[$name] = null;
                 }
             }
             return $result;
